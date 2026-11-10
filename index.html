@@ -39,7 +39,15 @@ img{max-width:100%;height:auto;display:block;object-fit:cover}
 .top-bar span{color:var(--accent-gold);font-weight:600}
 header{background:var(--bg-white);border-bottom:1px solid var(--border-color);position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.04);transition:background-color .3s}
 .nav-container{max-width:1280px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:var(--font-serif);font-size:30px;font-weight:500;letter-spacing:6px;text-transform:uppercase;color:var(--text-dark)}
+.logo{position:relative;display:inline-flex;font-family:var(--font-serif);font-size:30px;font-weight:300;letter-spacing:7px;text-transform:uppercase;color:var(--text-dark);padding-bottom:2px}
+.logo span{display:inline-block;opacity:0;transform:translateY(45%);animation:logoIn .8s var(--ease) forwards;animation-delay:calc(var(--i)*80ms + 200ms);transition:color .3s calc(var(--i)*35ms)}
+.logo span.b{font-weight:600}
+@keyframes logoIn{to{opacity:1;transform:none}}
+.logo::after{content:'';position:absolute;left:0;right:7px;bottom:-5px;height:1px;background:var(--accent-gold);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
+.logo:hover::after{transform:scaleX(1)}
+.logo:hover span{color:var(--gold-text)}
+@media (prefers-reduced-motion:reduce){.logo span{opacity:1;transform:none}}
+@media (max-width:600px){.logo{font-size:24px;letter-spacing:5px}}
 .nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;position:relative;transition:color .3s}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent-gold);transition:width .3s}
@@ -519,6 +527,8 @@ footer{background:var(--navy-primary);color:#fff;padding:60px 24px 30px;border-t
   let wishlist = new Set(load('kt_wish', []));
   let filter = null, toastTimer;
   $('#year').textContent = new Date().getFullYear();
+  /* Animated wordmark: KIM (bold) + TECH (light), letters rise in one by one */
+  $('#logoHome').innerHTML=[...'KimTech'].map((c,i)=>`<span class="${i<3?'b':''}" style="--i:${i}" aria-hidden="true">${c}</span>`).join('');
   $('#floatWa').href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hello KimTech, I have a question.')}`;
 
   /* ===== Theme ===== */
